@@ -20,5 +20,4 @@ router.patch("/update-note-pinned/:noteId", verifyToken, updateNotePinned);
 router.get("/search", verifyToken, searchNote );
 router.get("/:noteId", verifyToken, getNoteById);
 
-
 export default router;

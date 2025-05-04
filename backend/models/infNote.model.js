@@ -28,6 +28,11 @@ import mongoose from "mongoose";
       type: String,
       required: true
     },
+    versions: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "NoteVersion",
+      default: [],
+    }]
   },
     {
       timestamps: true

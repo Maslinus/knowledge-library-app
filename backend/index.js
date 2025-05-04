@@ -27,12 +27,14 @@ import noteRouter from "./routes/note.route.js"
 import infNoteRouter from "./routes/infNote.route.js"
 import uploadRouter from "./routes/upload.route.js";
 import groupRouter from "./routes/noteGroup.route.js";
+import versionRouter from "./routes/noteVersion.route.js";
 
 app.use("/api/auth", authRouter)
 app.use("/api/note", noteRouter)
 app.use("/api/infNote", infNoteRouter)
 app.use("/api/uploadCloud", uploadRouter);
 app.use("/api/group", groupRouter);
+app.use("/api/versions", versionRouter);
 
 app.use((err, req, res, next) =>{
     const statusCode = err.statusCode || 500

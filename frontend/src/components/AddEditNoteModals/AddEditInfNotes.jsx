@@ -7,6 +7,7 @@ import BlockInput from '../Input/BlockInput';
 import { FaRegEye } from 'react-icons/fa6';
 import NoteLinkModal from './NoteLinkModal';
 import TreeModal from '../NotesTree/TreeModal';
+import VersionList from './VersionList';
 
 const AddEditInfNotes = ({ onClose, onChangeNote, noteData, type, getAllNotes, allNotes, history, currentHistoryIndex, jumpTo}) => {
   const [title, setTitle] = useState(noteData?.title || "");
@@ -277,33 +278,63 @@ const AddEditInfNotes = ({ onClose, onChangeNote, noteData, type, getAllNotes, a
     }
   };
   
+  const handleLoadVersion = (version) => {
+    setTitle(version.title);
+    setDescription(version.description);
+    setBlocks(version.blocks);
+    setTags(version.tags || []);
+  };
+
+  const handleLoadMainNote = () => {
+    handleLoadVersion({
+      title: noteData?.title,
+      description: noteData?.description,
+      blocks: noteData?.blocks,
+      tags: noteData?.tags,
+    });
+  };
+
   return (
     <div
       className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center z-50"
     >
       <div className='flex flex-col justify-between py-[1%] px-[1%]'>
         <div className="flex-col">
-        <button
-          className="w-10 h-10 rounded-full flex items-center justify-center top-2 right-10 bg-blue-500 text-white hover:bg-blue-800"
-          onClick={() => setIsEditing(!isEditing)}
-          title={isEditing ? 'просмотр' : 'редактирование'}
-          >
-          {isEditing ? <FaRegEye/> : <MdCreate/>}
-        </button>
-
-        {isEditing && (
           <button
-            className="mt-2 w-10 h-10 rounded-full flex items-center justify-center top-2 right-10 bg-teal-500 text-white hover:bg-teal-700"
-            onClick={handleAddNote}
-            title={(type === "edit" || type === "view") ? "Обновить" : "Сохранить"}
-          >  
-            {(type === "edit" || type === "view") ? <MdUpdate/> : <MdSave/>}
+            className="w-10 h-10 rounded-full flex items-center justify-center top-2 right-10 bg-blue-500 text-white hover:bg-blue-800"
+            onClick={() => setIsEditing(!isEditing)}
+            title={isEditing ? 'просмотр' : 'редактирование'}
+            >
+            {isEditing ? <FaRegEye/> : <MdCreate/>}
           </button>
-        )}
+
+          {isEditing && (
+            <button
+              className="mt-2 w-10 h-10 rounded-full flex items-center justify-center top-2 right-10 bg-teal-500 text-white hover:bg-teal-700"
+              onClick={handleAddNote}
+              title={(type === "edit" || type === "view") ? "Обновить" : "Сохранить"}
+            >  
+              {(type === "edit" || type === "view") ? <MdUpdate/> : <MdSave/>}
+            </button>
+          )}
         </div>
 
         {isEditing && (
           <div className="flex flex-col gap-2">
+            {(type === "edit" || type === "view") && (
+              <>
+                <VersionList
+                  key={noteData._id}
+                  noteId={noteData._id}
+                  title={title}
+                  description={description}
+                  blocks={blocks}
+                  tags={tags}
+                  onSelectVersion={handleLoadVersion}
+                  handleLoadMainNote={handleLoadMainNote}
+                />
+              </>
+            )}
             <div className="flex flex-col w-10 h-22 gap-2">
               <button
                 className={`duration-700 w-10 h-10 rounded-full flex items-center justify-center transform
