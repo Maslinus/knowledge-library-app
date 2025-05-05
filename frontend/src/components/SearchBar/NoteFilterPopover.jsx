@@ -32,71 +32,77 @@ const NoteFilterPopover = ({
 
     return (
         <div className="relative">
-            <button>
-                <FaFilter
-                    className="w-6 h-6 text-slate-500 hover:text-black cursor-pointer"
-                    onClick={toggleFilter}
-                />
+            <button onClick={toggleFilter}>
+                <FaFilter className="w-6 h-6 text-slate-500 hover:text-black cursor-pointer" />
             </button>
 
-            {isOpen && (
-                <div className="absolute bg-white border rounded-md shadow-lg p-2 w-[190px] sm:w-[270px] md:w-[350px] xl:w-[350px]">
-                    <p>По тегам:</p>
-                   <input
-                        type="text"
-                        placeholder="Поиск по тегам..."
-                        className="w-full p-2 mb-1 border rounded-md"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    <div className="border-b-2 border-slate-500 py-1 bg-slate-100 overflow-x-auto whitespace-nowrap no-scrollbar">
-                        {filteredTags.map((tag) => (
-                            <button
-                                key={tag}
-                                onClick={() => handleTagToggle(tag)}
-                                className={`px-4 py-2 mx-1 rounded-md text-sm bg-white
-                                ${selectedTags.includes(tag) ? 'border-2 border-green-500 text-green-500' : 'border border-gray-300'} 
-                                hover:bg-gray-100 focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap`}
-                                title={tag}
-                            >
-                                {tag}
-                            </button>
-                        ))}
-                    </div>
-                    По времени создания:
-
-                    <div className="border-b-2 border-slate-500 flex items-center justify-around">
-                        <div className="py-1">
-                            <label className="block text-sm">С:</label>
-                            <DatePicker
+            <div
+                className={`
+                    absolute top-full mt-2 z-10 bg-white border rounded-md shadow-lg p-4
+                    w-[190px] sm:w-[270px] md:w-[350px] xl:w-[350px]
+                    transition-all duration-300 ease-out transform origin-top
+                    ${isOpen ? "opacity-100 scale-y-100 translate-y-0 pointer-events-auto" : "opacity-0 scale-y-75 -translate-y-2 pointer-events-none"}
+                `}
+            >
+                {/* Содержимое фильтра */}
+                <p className="mb-1">По тегам:</p>
+                <input
+                    type="text"
+                    placeholder="Поиск по тегам..."
+                    className="w-full p-2 mb-2 border rounded-md"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <div className="border-b-2 border-slate-500 py-2 bg-slate-100 overflow-x-auto whitespace-nowrap no-scrollbar">
+                    {filteredTags.map((tag) => (
+                        <button
+                            key={tag}
+                            onClick={() => handleTagToggle(tag)}
+                            className={`px-4 py-2 mx-1 rounded-md text-sm bg-white
+                            ${selectedTags.includes(tag) ? 'border-2 border-green-500 text-green-500' : 'border border-gray-300'} 
+                            hover:bg-gray-100 focus:outline-none overflow-hidden text-ellipsis whitespace-nowrap`}
+                            title={tag}
+                        >
+                            {tag}
+                        </button>
+                    ))}
+                </div>
+                <p className="mt-2">По времени создания:</p>
+                <div className="border-b-2 border-slate-500 flex items-center justify-around py-2">
+                    <div>
+                        <label className="block text-sm">С:</label>
+                        <DatePicker
                             selected={startDate}
                             onChange={setStartDate}
-                            dateFormat="yyyy-MM-dd"
-                            className="border p-1 rounded-md w-[60%]"
-                            />
-                        </div>
-                        <div className="py-1">
-                            <label className="block text-sm">По:</label>
-                            <DatePicker
+                            dateFormat="dd-MM-yyyy"
+                            className="border p-1 rounded-md w-[100px]"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-sm">По:</label>
+                        <DatePicker
                             selected={endDate}
                             onChange={setEndDate}
-                            dateFormat="yyyy-MM-dd"
-                            className="border p-1 rounded-md w-[60%]"
-                            />
-                        </div>
-                    </div>
-                    <div className="flex items-center justify-around">
-                        <button className="mt-2 p-2 border bg-white border-gray-300 rounded-md text-sm hover:bg-gray-100 focus:outline-none
-                                overflow-hidden text-ellipsis whitespace-nowrap" onClick={handleSearch}>
-                            Применить фильтр
-                        </button>
-                        <button className="mt-2 p-2 border bg-white border-gray-300 rounded-md text-sm hover:bg-gray-100 focus:outline-none
-                                overflow-hidden text-ellipsis whitespace-nowrap" onClick={onClearSearch}>
-                            Очистить фильтр
-                        </button>
+                            dateFormat="dd-MM-yyyy"
+                            className="border p-1 rounded-md w-[100px]"
+                        />
                     </div>
                 </div>
-            )}
+                <div className="flex items-center justify-around mt-2">
+                    <button
+                        className="p-2 border bg-white border-gray-300 rounded-md text-sm hover:bg-gray-100"
+                        onClick={handleSearch}
+                    >
+                        Применить фильтр
+                    </button>
+                    <button
+                        className="p-2 border bg-white border-gray-300 rounded-md text-sm hover:bg-gray-100"
+                        onClick={onClearSearch}
+                    >
+                        Очистить фильтр
+                    </button>
+                </div>
+            </div>
         </div>
     );
 };
