@@ -4,13 +4,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { validateEmail } from '../../utils/helper'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import VerificationCodeInput from '../../components/Input/VerificationCodeInput'
 
 const Signup = () => {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [code, setCode] = useState("")
-  const [step, setStep] = useState(1) // 1 - регистрация, 2 - подтверждение
+  const [step, setStep] = useState(1)
   const [error, setError] = useState("")
 
   const navigate = useNavigate()
@@ -18,9 +19,9 @@ const Signup = () => {
   const handleSignUp = async (e) => {
     e.preventDefault()
 
-    if (!name) return setError("Please enter your name")
-    if (!validateEmail(email)) return setError("Please enter a valid email address")
-    if (!password) return setError("Please enter the password")
+    if (!name) return setError("Пожалуйста, введите ваше имя")
+    if (!validateEmail(email)) return setError("Пожалуйста, введите действительный адрес электронной почты")
+    if (!password) return setError("Пожалуйста, введите пароль")
 
     setError("")
 
@@ -36,7 +37,7 @@ const Signup = () => {
         return
       }
 
-      toast.success("Verification code sent to your email.")
+      toast.success("Код подтверждения отправлен на ваш адрес электронной почты.")
       setStep(2)
     } catch (error) {
       toast.error(error?.response?.data?.message || "Signup failed")
@@ -48,7 +49,7 @@ const Signup = () => {
     e.preventDefault()
 
     if (!code || code.length !== 6) {
-      return setError("Please enter the 6-digit verification code")
+      return setError("Введите 6-значный проверочный код.")
     }
 
     try {
@@ -68,7 +69,7 @@ const Signup = () => {
         return
       }
 
-      toast.success("Account verified. You can now log in.")
+      toast.success("Учетная запись проверена. Теперь вы можете войти в систему.")
       navigate("/login")
     } catch (error) {
       toast.error(error?.response?.data?.message || "Verification failed")
@@ -108,18 +109,7 @@ const Signup = () => {
           )}
 
           {step === 2 && (
-            <>
-              <p className="text-sm mb-2 text-gray-600">
-                A verification code has been sent to <b>{email}</b>.
-              </p>
-              <input
-                type="text"
-                placeholder="Enter verification code"
-                className="input-box"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </>
+            <VerificationCodeInput email={email} code={code} setCode={setCode} />
           )}
 
           {error && <p className="text-red-500 text-sm pb-1">{error}</p>}
@@ -130,7 +120,7 @@ const Signup = () => {
 
           {step === 1 && (
             <p className="text-sm text-center mt-4">
-              Already have an account?{" "}
+              У вас уже есть аккаунт?{" "}
               <Link
                 to={"/login"}
                 className="font-medium text-[#2B85FF] underline"
