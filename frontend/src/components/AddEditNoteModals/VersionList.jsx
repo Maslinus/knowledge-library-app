@@ -23,83 +23,82 @@ const VersionList = ({ noteId, title, description, blocks, tags, onSelectVersion
     }
   };
   
-    const handleSaveVersion = async () => {
+  const handleSaveVersion = async () => {
+    try {
+      const res = await axios.post(
+          `http://localhost:3000/api/versions/save/${noteId}`,
+          {
+            title,
+            description,
+            blocks,
+            tags,
+          },
+          { withCredentials: true }
+        );
+      if (res.data.success) {
+          toast.success("Версия заметки сохранена");
+        fetchVersions();
+      } else {
+        toast.error(res.data.message || "Не удалось сохранить версию");
+      }
+    } catch (error) {
+      console.error("Ошибка при сохранении версии:", error);
+      toast.error("Ошибка при сохранении версии");
+    }
+  };
+
+  const handleUpdateVersion = async () => {
       try {
-        const res = await axios.post(
-            `http://localhost:3000/api/versions/save/${noteId}`,
-            {
-              title,
-              description,
-              blocks,
-              tags,
-            },
-            { withCredentials: true }
-          );
+        const res = await axios.put(
+          `http://localhost:3000/api/versions/update/${selectedVersionId}`,
+          {
+            title,
+            description,
+            blocks,
+            tags,
+          },
+          { withCredentials: true }
+        );
+    
         if (res.data.success) {
-            toast.success("Версия заметки сохранена");
+          toast.success("Версия успешно обновлена");
           fetchVersions();
         } else {
-          toast.error(res.data.message || "Не удалось сохранить версию");
+          toast.error(res.data.message || "Ошибка при обновлении версии");
         }
       } catch (error) {
-        console.error("Ошибка при сохранении версии:", error);
-        toast.error("Ошибка при сохранении версии");
+        console.error("Ошибка при обновлении версии:", error);
+        toast.error("Ошибка при обновлении версии");
       }
-    };
+  };      
 
-    const handleUpdateVersion = async () => {
-        try {
-          const res = await axios.put(
-            `http://localhost:3000/api/versions/update/${selectedVersionId}`,
-            {
-              title,
-              description,
-              blocks,
-              tags,
-            },
-            { withCredentials: true }
-          );
-      
-          if (res.data.success) {
-            toast.success("Версия успешно обновлена");
-            fetchVersions();
-          } else {
-            toast.error(res.data.message || "Ошибка при обновлении версии");
-          }
-        } catch (error) {
-          console.error("Ошибка при обновлении версии:", error);
-          toast.error("Ошибка при обновлении версии");
+  const handleDeleteVersion = async () => {
+      if (!selectedVersionId) return;
+    
+      try {
+        const res = await axios.delete(
+          `http://localhost:3000/api/versions/delete/${selectedVersionId}`,
+          { withCredentials: true }
+        );
+    
+        if (res.data.success) {
+          toast.success("Версия успешно удалена");
+          setSelectedVersionId(null);
+          fetchVersions();
+        } else {
+          toast.error(res.data.message || "Ошибка при удалении версии");
         }
-    };      
-
-    const handleDeleteVersion = async () => {
-        if (!selectedVersionId) return;
+      } catch (error) {
+        console.error("Ошибка при удалении версии:", error);
+        toast.error("Ошибка при удалении версии");
+      }
+  };
       
-        try {
-          const res = await axios.delete(
-            `http://localhost:3000/api/versions/delete/${selectedVersionId}`,
-            { withCredentials: true }
-          );
-      
-          if (res.data.success) {
-            toast.success("Версия успешно удалена");
-            setSelectedVersionId(null);
-            fetchVersions();
-          } else {
-            toast.error(res.data.message || "Ошибка при удалении версии");
-          }
-        } catch (error) {
-          console.error("Ошибка при удалении версии:", error);
-          toast.error("Ошибка при удалении версии");
-        }
-    };
-
-      
-    useEffect(() => {
-        if (noteId) {
-        fetchVersions();
-        }
-    }, [noteId]);
+  useEffect(() => {
+      if (noteId) {
+      fetchVersions();
+      }
+  }, [noteId]);
 
   return (
     <div className="flex flex-col items-center">
