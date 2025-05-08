@@ -11,8 +11,9 @@ import {
 } from "../redux/user/userSlice"
 import axios from "axios"
 import { toast } from "react-toastify"
+import { MdViewList, MdViewModule } from "react-icons/md"
 
-const Navbar = ({userInfo, tags, onSearchNote, handleClearSearch}) => {
+const Navbar = ({userInfo, tags, onSearchNote, handleClearSearch, viewMode, setViewMode}) => {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedTags, setSelectedTags] = useState([])
   const [startDate, setStartDate] = useState(null);
@@ -87,6 +88,12 @@ const Navbar = ({userInfo, tags, onSearchNote, handleClearSearch}) => {
           handleSearch = {handleSearch}
           onClearSearch = {onClearSearch}
         />
+        <button
+          onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+          className="h-6 w-6  text-black hover:text-slate-700"
+        >
+          {viewMode === 'grid' ? <MdViewList className='h-full w-full'/> : <MdViewModule className='h-full w-full'/>}
+        </button>
       </div>
 
       <ProfileInfo userInfo={userInfo} onLogout={onLogout}/>

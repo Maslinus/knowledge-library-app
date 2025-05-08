@@ -422,7 +422,7 @@ const Home = () => {
   return (
     <>
       <ScrollableWithShadow className='relative  overflow-y-auto h-full rounded-md bg-slate-100 shadow-md scroll-smooth' height='100vh'>
-      <Navbar userInfo={userInfo} tags={tags} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch}/>
+      <Navbar userInfo={userInfo} tags={tags} onSearchNote={onSearchNote} handleClearSearch={handleClearSearch} viewMode={viewMode} setViewMode = {setViewMode}/>
       
       <div className="container max-w-[calc(100%-2rem)] mx-auto">
       {(Array.isArray(allNotes) && allNotes.length > 0) || (Array.isArray(allInfNotes) && allInfNotes.length > 0) ? (
@@ -430,7 +430,9 @@ const Home = () => {
             <button className='mt-3' onClick={() => setShowNotes((prev) => !prev)}>
               {showNotes ? "Скрыть заметки" : "Показать заметки"}
             </button>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-1 max-md:m-5">
+            <div className={viewMode === 'grid' 
+                  ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-1 max-md:m-5" 
+                  : "flex flex-col gap-2 mt-1 max-md:m-5"}>
               {showNotes && Array.isArray(allNotes) && allNotes.map((note) => (
                 <NoteCard
                   key={note._id}
@@ -443,6 +445,7 @@ const Home = () => {
                   onDelete={() => {deleteNote(note)}}
                   onPinNote={() => {updateIsPinned(note)}}
                   onView={() => handleNoteView(note)}
+                  viewMode={viewMode}
                 />
               ))}
             </div>
@@ -450,12 +453,6 @@ const Home = () => {
             <div className='flex justify-between items-center mt-3'>
               <button className='' onClick={() => setShowInfNotes((prev) => !prev)}>
                 {showInfNotes ? "Скрыть инфозаметки" : "Показать инфозаметки"}
-              </button>
-              <button
-                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
-                className="h-6 w-6  text-black hover:text-slate-700"
-              >
-                {viewMode === 'grid' ? <MdViewList className='h-full w-full'/> : <MdViewModule className='h-full w-full'/>}
               </button>
               <GroupDropdown
                 groups={allGroups}
