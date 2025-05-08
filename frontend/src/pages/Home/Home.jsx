@@ -14,6 +14,7 @@ import AddNoteButton from '../../components/AddEditNoteModals/AddNoteButton'
 import ScrollableWithShadow from '../../utils/ScrollableWithShadow'
 import GroupDropdown from '../../components/GroupDropdown/GroupDropdown'
 import GroupModal from '../../components/GroupDropdown/GroupModal'
+import { MdViewList, MdViewModule } from 'react-icons/md'
 
 const Home = () => {
   // UserInfo
@@ -25,6 +26,7 @@ const Home = () => {
   // InfNote
   const [allInfNotes, setAllInfNotes] = useState([]);
   const [showInfNotes, setShowInfNotes] = useState(true);
+  const [viewMode, setViewMode] = useState('grid');
   const [tags, setTags] = useState([]);
 
   const [history, setHistory] = useState([]);
@@ -449,6 +451,12 @@ const Home = () => {
               <button className='' onClick={() => setShowInfNotes((prev) => !prev)}>
                 {showInfNotes ? "Скрыть инфозаметки" : "Показать инфозаметки"}
               </button>
+              <button
+                onClick={() => setViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+                className="h-6 w-6  text-black hover:text-slate-700"
+              >
+                {viewMode === 'grid' ? <MdViewList className='h-full w-full'/> : <MdViewModule className='h-full w-full'/>}
+              </button>
               <GroupDropdown
                 groups={allGroups}
                 onAddGroup={handleGroupCreate}
@@ -487,7 +495,9 @@ const Home = () => {
                   border: activeGroupId ? `2px solid ${getGroupColor(activeGroupId)}` : "none",
                 }}
               >
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-1 max-md:m-5">
+                <div className={viewMode === 'grid' 
+                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-1 max-md:m-5" 
+                  : "flex flex-col gap-2 mt-1 max-md:m-5"}>
                   {Array.isArray(filteredInfNotes) && filteredInfNotes.map((note) => (
                     <InfNoteCard
                       key={note._id}
@@ -501,6 +511,7 @@ const Home = () => {
                       onDelete={() => deleteInfNote(note)}
                       onPinNote={() => updateInfIsPinned(note)}
                       onView={() => handleInfNoteView(note)}
+                      viewMode={viewMode}
                     />
                   ))}
                 </div>
