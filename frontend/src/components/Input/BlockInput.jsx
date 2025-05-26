@@ -250,7 +250,7 @@ const BlockInput = ({ blocks, setBlocks, isEditing, searchQuery, onSelectNote}) 
                             <div className="flex gap-4">
                                 <a
                                     href={block.url}
-                                    download={block.name || `${block.url.split('/').pop().split('?')[0]}`} // Используем ID или название файла из URL
+                                    download={block.name || `${block.url.split('/').pop().split('?')[0]}`}
                                     title="Скачать документ"
                                     className="w-8 h-8 bg-gray-200 text-gray-800 flex items-center justify-center rounded hover:bg-gray-300 transition"
                                 >
@@ -261,7 +261,6 @@ const BlockInput = ({ blocks, setBlocks, isEditing, searchQuery, onSelectNote}) 
                         </div>
                     </div>
                 )}
-
 
                 {block.type === 'noteLink' && ( isEditing ? (
                         <>
