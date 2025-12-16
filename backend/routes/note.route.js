@@ -11,4 +11,4 @@ router.delete("/delete/:noteId", verifyToken, deleteNote)
 router.put("/update-note-pinned/:noteId", verifyToken, updateNotePinned)
 router.get("/search", verifyToken, searchNote)
 
-export default router
+export default router;
