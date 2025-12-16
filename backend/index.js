@@ -7,8 +7,11 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
+console.log("Express app created");
 
 app.use(express.json());
+console.log("express.json middleware attached");
+
 app.use(cookieParser());
 app.use(cors({
   origin: [
@@ -19,19 +22,41 @@ app.use(cors({
 }));
 
 import authRouter from "./routes/auth.route.js";
+console.log("authRouter imported:", !!authRouter);
+
 import noteRouter from "./routes/note.route.js";
+console.log("noteRouter imported:", !!noteRouter);
+
 import infNoteRouter from "./routes/infNote.route.js";
+console.log("infNoteRouter imported:", !!infNoteRouter);
+
 import uploadRouter from "./routes/upload.route.js";
+console.log("uploadRouter imported:", !!uploadRouter);
+
 import groupRouter from "./routes/noteGroup.route.js";
+console.log("groupRouter imported:", !!groupRouter);
+
 import versionRouter from "./routes/noteVersion.route.js";
+console.log("versionRouter imported:", !!versionRouter);
 
 console.log(authRouter);
 app.use("/api/auth", authRouter);
+console.log("authRouter attached");
+
 app.use("/api/note", noteRouter);
+console.log("noteRouter attached");
+
 app.use("/api/infNote", infNoteRouter);
+console.log("infNoteRouter attached");
+
 app.use("/api/uploadCloud", uploadRouter);
+console.log("uploadRouter attached");
+
 app.use("/api/group", groupRouter);
+console.log("groupRouter attached");
+
 app.use("/api/versions", versionRouter);
+console.log("versionRouter attached");
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
