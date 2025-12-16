@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://knowledge-library.pages.dev"
+    "https://knowledge-library.netlify.app"
   ],
   credentials: true
 }));
@@ -44,14 +44,7 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(process.env.MONGO_URL)
-  .then(() => {
-    console.log("Connected to MongoDB");
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error("MongoDB error:", err));
 
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error("MongoDB connection error:", err);
-  });
+export default app;
