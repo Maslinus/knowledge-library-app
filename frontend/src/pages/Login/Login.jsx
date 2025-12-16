@@ -44,7 +44,7 @@ const Login = () => {
       dispatch(signInStart())
 
       const res = await axios.post(
-        "http://localhost:3000/api/auth/signin",
+        "https://marvelous-panda-f9f040.netlify.app/api/auth/signin",
         { email, password },
         { withCredentials: true }
       )
@@ -70,7 +70,7 @@ const Login = () => {
     e.preventDefault()
     if (!validateEmail(resetEmail)) return toast.error("Введите корректный email")
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/requestPasswordReset", { email: resetEmail })
+      const res = await axios.post("https://marvelous-panda-f9f040.netlify.app/api/auth/requestPasswordReset", { email: resetEmail })
       toast.success(res.data.message)
       setMode("reset")
     } catch (err) {
@@ -82,7 +82,7 @@ const Login = () => {
     e.preventDefault()
     if (!code || !newPassword) return toast.error("Введите код и новый пароль")
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/resetPassword", {
+      const res = await axios.post("https://marvelous-panda-f9f040.netlify.app/api/auth/resetPassword", {
         email: resetEmail,
         code,
         newPassword,

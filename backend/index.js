@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://knowledge-library.netlify.app"
+    "https://marvelous-panda-f9f040.netlify.app"
   ],
   credentials: true
 }));
