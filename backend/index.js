@@ -25,6 +25,7 @@ import uploadRouter from "./routes/upload.route.js";
 import groupRouter from "./routes/noteGroup.route.js";
 import versionRouter from "./routes/noteVersion.route.js";
 
+console.log(authRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/note", noteRouter);
 app.use("/api/infNote", infNoteRouter);

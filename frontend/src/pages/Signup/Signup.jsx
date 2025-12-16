@@ -27,7 +27,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        "https://marvelous-panda-f9f040.netlify.app/api/auth/signup",
         { username: name, email, password },
         { withCredentials: true }
       )
@@ -54,7 +54,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/verifyEmail",
+        "https://marvelous-panda-f9f040.netlify.app/api/auth/verifyEmail",
         {
           email,
           username: name,
