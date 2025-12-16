@@ -1,6 +1,6 @@
 import express from "express";
 import { verifyToken } from "../utils/verifyUser.js";
-import { deleteNoteVersion, getNoteVersions, saveNoteVersion, updateNoteVersion } from "../controller/NoteVersion.controller.js";
+import { deleteNoteVersion, getNoteVersions, saveNoteVersion, updateNoteVersion } from "../controller/noteVersion.controller.js";
 
 
 const router = express.Router();

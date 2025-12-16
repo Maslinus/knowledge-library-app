@@ -4,7 +4,7 @@ import { deleteFile, uploadFile } from "../controller/upload.controller.js";
 import multer from "multer";
 
 const router = express.Router();
-const upload = multer(); // сохраняем в память, без записи на диск
+const upload = multer();
 
 router.post("/upload", verifyToken, upload.single("file"), uploadFile);
 router.post("/delete", verifyToken, deleteFile);
