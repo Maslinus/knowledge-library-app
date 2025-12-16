@@ -1,7 +1,9 @@
 [build]
+  publish = "frontend/dist"
   functions = "backend/netlify/functions"
+  command = "npm install && npm run build"
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "/.netlify/functions/api"
   status = 200
