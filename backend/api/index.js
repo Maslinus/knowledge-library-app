@@ -31,6 +31,10 @@ app.use("/api/uploadCloud", uploadRouter);
 app.use("/api/group", groupRouter);
 app.use("/api/versions", versionRouter);
 
+app.get("/api", (req, res) => {
+  res.json({ message: "Backend is running!" });
+});
+
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || "Internal Server Error";
