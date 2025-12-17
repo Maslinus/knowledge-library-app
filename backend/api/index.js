@@ -5,6 +5,8 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import serverless from "serverless-http";
+import path from "path";
+import { fileURLToPath } from "url";
 
 import authRouter from "../routes/auth.route.js";
 import noteRouter from "../routes/note.route.js";
@@ -16,6 +18,10 @@ import versionRouter from "../routes/noteVersion.route.js";
 dotenv.config();
 
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use('/favicon.ico', express.static(path.join(__dirname, 'favicon.ico')));
 
 app.use(express.json());
 app.use(cookieParser());
