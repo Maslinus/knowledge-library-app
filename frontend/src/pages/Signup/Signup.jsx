@@ -5,6 +5,7 @@ import { validateEmail } from '../../utils/helper'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import VerificationCodeInput from '../../components/Input/VerificationCodeInput'
+import { API_URL } from '../../api';
 
 const Signup = () => {
   const [name, setName] = useState("")
@@ -27,7 +28,7 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/signup",
+        `${API_URL}/auth/signup`,
         { username: name, email, password },
         { withCredentials: true }
       )
@@ -54,13 +55,8 @@ const Signup = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/auth/verifyEmail",
-        {
-          email,
-          username: name,
-          password,
-          code,
-        },
+        `${API_URL}/auth/verifyEmail`,
+        { email, username: name, password, code },
         { withCredentials: true }
       )
 

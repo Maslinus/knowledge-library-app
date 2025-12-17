@@ -15,6 +15,7 @@ import ScrollableWithShadow from '../../utils/ScrollableWithShadow'
 import GroupDropdown from '../../components/GroupDropdown/GroupDropdown'
 import GroupModal from '../../components/GroupDropdown/GroupModal'
 import { MdViewList, MdViewModule } from 'react-icons/md'
+import { API_URL } from '../../api'
 
 const Home = () => {
   // UserInfo
@@ -213,7 +214,7 @@ const Home = () => {
 
   const getAllNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/note/all", {
+      const res = await axios.get(`${API_URL}/note/all`, {
         withCredentials: true,
       })
 
@@ -241,7 +242,7 @@ const Home = () => {
 
     try {
       const res = await axios.delete(
-        "http://localhost:3000/api/note/delete/" + noteId,
+        `${API_URL}/note/delete/` + noteId,
         { withCredentials: true }
       )
 
@@ -262,7 +263,7 @@ const Home = () => {
 
     try {
       const res = await axios.put(
-        "http://localhost:3000/api/note/update-note-pinned/" + noteId,
+        `${API_URL}/note/update-note-pinned/` + noteId,
         { isPinned: !noteData.isPinned },
         { withCredentials: true }
       )
@@ -292,11 +293,11 @@ const Home = () => {
 
     try {
       const [noteRes, infNoteRes] = await Promise.all([
-        axios.get("http://localhost:3000/api/note/search", {
+        axios.get(`${API_URL}/note/search`, {
           params: { query, tags: selectedTags, startDate, endDate },
           withCredentials: true,
         }),
-        axios.get("http://localhost:3000/api/infNote/search", {
+        axios.get(`${API_URL}/infNote/search`, {
           params: { query, tags: selectedTags, startDate, endDate },
           withCredentials: true,
         }),
@@ -359,7 +360,7 @@ const Home = () => {
 
   const getAllGroups = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/group/all", {
+      const res = await axios.get(`${API_URL}/group/all`, {
         withCredentials: true,
       });
   
@@ -376,7 +377,7 @@ const Home = () => {
 
   const handleDeleteGroup = async (groupId) => {
     try {
-      const res = await axios.delete(`http://localhost:3000/api/group/delete/${groupId}`, {
+      const res = await axios.delete(`${API_URL}/group/delete/${groupId}`, {
         withCredentials: true,
       });
   

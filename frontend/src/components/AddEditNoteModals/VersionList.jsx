@@ -11,7 +11,7 @@ const VersionList = ({ noteId, title, description, blocks, tags, onSelectVersion
 
   const fetchVersions = async () => {
     try {
-      const res = await axios.get(`http://localhost:3000/api/versions/${noteId}`, {
+      const res = await axios.get(`${API_URL}/versions/${noteId}`, {
         withCredentials: true,
       });
       if (res.data.success) {
@@ -26,7 +26,7 @@ const VersionList = ({ noteId, title, description, blocks, tags, onSelectVersion
   const handleSaveVersion = async () => {
     try {
       const res = await axios.post(
-          `http://localhost:3000/api/versions/save/${noteId}`,
+          `${API_URL}/versions/save/${noteId}`,
           {
             title,
             description,
@@ -50,7 +50,7 @@ const VersionList = ({ noteId, title, description, blocks, tags, onSelectVersion
   const handleUpdateVersion = async () => {
       try {
         const res = await axios.put(
-          `http://localhost:3000/api/versions/update/${selectedVersionId}`,
+          `${API_URL}/versions/update/${selectedVersionId}`,
           {
             title,
             description,
@@ -77,7 +77,7 @@ const VersionList = ({ noteId, title, description, blocks, tags, onSelectVersion
     
       try {
         const res = await axios.delete(
-          `http://localhost:3000/api/versions/delete/${selectedVersionId}`,
+          `${API_URL}/versions/delete/${selectedVersionId}`,
           { withCredentials: true }
         );
     

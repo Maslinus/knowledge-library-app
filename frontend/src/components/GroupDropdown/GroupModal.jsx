@@ -49,7 +49,7 @@ const GroupModal = ({
         const removeNoteIds = Array.from(currentNoteIds).filter(id => !updatedNoteIds.has(id));
   
         const res = await axios.put(
-          `http://localhost:3000/api/group/edit/${group._id}`,
+          `${API_URL}/group/edit/${group._id}`,
           {
             title,
             color,
@@ -66,7 +66,7 @@ const GroupModal = ({
         }
       } else {
         const res = await axios.post(
-          "http://localhost:3000/api/group/add",
+          `${API_URL}/group/add`,
           {
             title,
             color,

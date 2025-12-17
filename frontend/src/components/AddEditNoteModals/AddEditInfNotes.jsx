@@ -33,7 +33,7 @@ const AddEditInfNotes = ({ onClose, onChangeNote, noteData, type, getAllNotes, a
       formData.append('file', file);
       formData.append('resource_type', resourceType);
     
-      const response = await axios.post('http://localhost:3000/api/uploadCloud/upload', formData, {
+      const response = await axios.post(`${API_URL}/uploadCloud/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -90,8 +90,8 @@ const AddEditInfNotes = ({ onClose, onChangeNote, noteData, type, getAllNotes, a
       };
   
       const url = (type === 'edit' || type === 'view')
-        ? `http://localhost:3000/api/infNote/edit/${noteData._id}`
-        : 'http://localhost:3000/api/infNote/add';
+        ? `${API_URL}/infNote/edit/${noteData._id}`
+        : `${API_URL}/infNote/add`;
   
       const res = (type === 'edit' || type === 'view')
         ? await axios.put(url, dataToSend, { withCredentials: true })
