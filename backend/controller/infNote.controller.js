@@ -30,7 +30,7 @@ export const addNote = async (req, res, next) => {
   
       res.status(201).json({
         success: true,
-        message: "Note added successfully",
+        message: "Заметка успешно добавлена",
         note,
       });
     } catch (error) {
@@ -80,7 +80,7 @@ export const editNote = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      message: "Note updated successfully",
+      message: "Заметка успешно обновлена",
       note,
     });
   } catch (error) {
